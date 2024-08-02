@@ -28,16 +28,6 @@ class BarcaCubit extends Cubit<BarcaState> {
     }
   }
 
-  Future<void> getBarca(int id) async {
-    try {
-      emit(BarcaLoading());
-      final barca = await barcaRepository.getBarca(id);
-      emit(BarcaSuccess(barcas: [barca]));
-    } catch (e) {
-      emit(BarcaFailure(message: e.toString()));
-    }
-  }
-
   Future<void> updateBarca(BarcaModel barca) async {
     try {
       emit(BarcaLoading());
@@ -48,10 +38,10 @@ class BarcaCubit extends Cubit<BarcaState> {
     }
   }
 
-  Future<void> deleteBarca(int id) async {
+  Future<void> deleteBarca(BarcaModel barca) async {
     try {
       emit(BarcaLoading());
-      await barcaRepository.deleteBarca(id);
+      await barcaRepository.deleteBarca(barca);
       emit(BarcaSuccess(barcas: await barcaRepository.getBarcas()));
     } catch (e) {
       emit(BarcaFailure(message: e.toString()));
